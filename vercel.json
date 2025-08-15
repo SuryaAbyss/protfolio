@@ -2,8 +2,6 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "installCommand": "npm install",
+  "installCommand": "npm install && npm install vue@3",
   "devCommand": "npm run dev"
-  "npm install vue@3"
 }
-
