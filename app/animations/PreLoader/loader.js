@@ -54,7 +54,7 @@ export const preLoaderAnim = () => {
 };
 
 export const mobileLanding = () => {
-  window.innerWidth < 763 &&
+  typeof window !== 'undefined' && window.innerWidth < 763 &&
     tl.from(".landing__main2", {
       duration: 1,
       delay: 0,
