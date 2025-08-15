@@ -19,17 +19,19 @@ export default function Home() {
   const blobityInstance = useBlobity(initialBlobityOptions);
 
   useEffect(() => {
-    if (blobityInstance.current) {
+    if (blobityInstance.current && typeof window !== 'undefined') {
       // @ts-ignore for debugging purposes or playing around
       window.blobity = blobityInstance.current;
     }
   }, [blobityInstance]);
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-    });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+      });
+    }
   }, []);
 
   return (
