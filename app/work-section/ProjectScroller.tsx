@@ -20,7 +20,7 @@ const ProjectScroller = () => {
   // Calculate which project should be active based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current || !projectsRef.current) return;
+      if (!containerRef.current || !projectsRef.current || typeof window === 'undefined') return;
       
       const container = containerRef.current;
       const projectsContainer = projectsRef.current;
@@ -35,9 +35,11 @@ const ProjectScroller = () => {
       setActiveIndex(Math.max(0, Math.min(newIndex, devProjects.length - 1)));
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial call
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   // Update hovered project based on active index when not manually hovering
