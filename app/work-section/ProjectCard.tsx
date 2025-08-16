@@ -123,6 +123,12 @@ const ProjectCard = ({
             playsInline
             preload="metadata"
             onLoadedData={handleVideoLoad}
+            onError={(e) => {
+              console.warn('Background video failed to load:', e);
+            }}
+            onLoadStart={() => {
+              console.log('Background video loading started');
+            }}
             className="w-full h-full object-cover opacity-50 group-hover:opacity-65 transition-opacity duration-300 transform-gpu"
             style={{
               filter: 'blur(0.3px) brightness(0.85) contrast(1.05)',
@@ -153,6 +159,12 @@ const ProjectCard = ({
             muted
             playsInline
             preload="metadata"
+            onError={(e) => {
+              console.warn('Project video failed to load:', e);
+            }}
+            onLoadStart={() => {
+              console.log('Project video loading started');
+            }}
             className={`absolute bottom-12 w-[70%] sm:w-[85%] md:w-[60%] lg:max-w-[55%] rounded-lg z-20 transform-gpu will-change-transform ${
               id % 2 === 0 ? "right-7" : "left-0"
             }`}
