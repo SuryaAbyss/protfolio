@@ -157,6 +157,15 @@ const Hero = () => {
                 loop
                 playsInline
                 preload="metadata"
+                onError={(e) => {
+                  console.warn('Video failed to load:', e);
+                }}
+                onLoadStart={() => {
+                  console.log('Video loading started');
+                }}
+                onCanPlay={() => {
+                  console.log('Video can play');
+                }}
               >
                 <source src="/projects/main1.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
