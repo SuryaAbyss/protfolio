@@ -17,9 +17,16 @@ const Hero = () => {
     if (isHovering) {
       // Start 6-second timer when hovering begins
       hoverTimeoutRef.current = setTimeout(() => {
+        console.log('Starting video playback...');
         setShowVideo(true);
         if (videoRef.current) {
-          videoRef.current.play();
+          // Always start muted to comply with autoplay policies
+          videoRef.current.muted = true;
+          videoRef.current.play().catch((error) => {
+            console.warn('Video autoplay failed:', error);
+          });
+        } else {
+          console.error('Video ref is null');
         }
       }, 4000);
     } else {
@@ -148,23 +155,35 @@ const Hero = () => {
                   showVideo ? 'opacity-0' : 'opacity-100'
                 }`}
               />
+              {/* Fallback for video loading issues */}
+              {showVideo && (
+                <div className="absolute inset-0 w-[150px] rounded-[16px] md:w-[200px] md:rounded-[32px] lg:w-[245px] h-auto bg-black/50 flex items-center justify-center text-white text-xs">
+                  Video Loading...
+                </div>
+              )}
               <video
                 ref={videoRef}
                 className={`absolute inset-0 w-[150px] rounded-[16px] md:w-[200px] md:rounded-[32px] lg:w-[245px] h-auto object-cover transition-all duration-300 pointer-events-none ${
-                  showVideo ? 'opacity-100' : 'opacity-0'
+                  showVideo ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
-                muted={false}
+                muted={true}
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 onError={(e) => {
-                  console.warn('Video failed to load:', e);
+                  console.error('Video failed to load:', e);
                 }}
                 onLoadStart={() => {
                   console.log('Video loading started');
                 }}
                 onCanPlay={() => {
                   console.log('Video can play');
+                }}
+                onLoadedData={() => {
+                  console.log('Video data loaded');
+                }}
+                style={{
+                  display: showVideo ? 'block' : 'none'
                 }}
               >
                 <source src="/projects/main1.mp4" type="video/mp4" />
