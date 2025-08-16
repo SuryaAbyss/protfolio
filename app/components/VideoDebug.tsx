@@ -74,12 +74,14 @@ const VideoDebug = () => {
       </button>
       <video
         ref={videoRef}
-        src="/projects/main1.mp4"
         controls
         preload="auto"
         className="w-full mt-2"
         muted
-      />
+      >
+        <source src="/projects/main1.mp4" type="video/mp4" />
+        <source src="/api/video?path=projects/main1.mp4" type="video/mp4" />
+      </video>
     </div>
   );
 };
